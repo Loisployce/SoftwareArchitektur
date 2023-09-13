@@ -29,7 +29,7 @@ public class Main {
                     try {
                         proxy.sendMessage(message, chatter);
                     } catch (Exception e) {
-                        System.err.println("Du bist nicht im Chatroom");
+                        e.printStackTrace();
                     }
                     break;
                 case "2":

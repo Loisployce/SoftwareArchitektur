@@ -2,7 +2,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-public class ChatterServerProxy implements Runnable{
+
+public class ChatterServerProxy implements Runnable {
     private Socket socket;
     private RpcWriter writer;
     private RpcReader reader;
@@ -19,7 +20,7 @@ public class ChatterServerProxy implements Runnable{
         try {
             this.reader = new RpcReader(new InputStreamReader(socket.getInputStream()));
             this.writer = new RpcWriter(new OutputStreamWriter(socket.getOutputStream()));
-            while(running) {
+            while (running) {
                 writer.println("protocol: 1. Receive message ; 2. Get name ; 3. End Connection");
                 String input = reader.readLine();
                 switch (input) {
@@ -52,21 +53,23 @@ public class ChatterServerProxy implements Runnable{
             writer.println("1: " + e.getMessage());
         }
     }
+
     private void getName() {
         try {
             String name = this.chatter.getName();
             writer.println("0: Okay");
-            if(name == null) {
+            if (name == null) {
                 writer.println("3: Null");
-            }else {
+            } else {
                 writer.println("4: Value");
                 writer.println(name);
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             writer.println("1: " + e.getMessage());
         }
     }
+
     private void endConnection() {
         this.running = false;
         try {

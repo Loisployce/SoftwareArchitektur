@@ -8,7 +8,7 @@ public class RpcWriter extends PrintWriter {
 
     @Override
     public void println(String x) {
-        //System.out.println("Writing: " + x);
+        System.out.println(this + " Writing: " + x);
         super.println(x);
         super.flush();
     }

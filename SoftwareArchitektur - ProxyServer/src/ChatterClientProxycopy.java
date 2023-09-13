@@ -3,7 +3,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-public class ChatterClientProxy implements IChatter {
+public class ChatterClientProxycopy implements IChatter {
     private Socket socket;
     private RpcWriter writer;
     private RpcReader reader;
@@ -25,7 +25,7 @@ public class ChatterClientProxy implements IChatter {
             writer.println(message);
             String ret = reader.readLine();
             if (!ret.startsWith("0")) {
-                throw new RuntimeException("ProtocolError: " + ret);
+                throw new RuntimeException(ret);
             }
         } catch (IOException e) {
             e.printStackTrace();

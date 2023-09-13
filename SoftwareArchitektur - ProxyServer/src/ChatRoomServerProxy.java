@@ -4,7 +4,7 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.Hashtable;
 
-public class ChatRoomServerProxy implements Runnable{
+public class ChatRoomServerProxy implements Runnable {
     private Socket socket;
     private IChatRoom chatRoom;
     private RpcWriter writer;
@@ -22,8 +22,9 @@ public class ChatRoomServerProxy implements Runnable{
         try {
             this.reader = new RpcReader(new InputStreamReader(socket.getInputStream()));
             this.writer = new RpcWriter(new OutputStreamWriter(socket.getOutputStream()));
-            while(running) {
-                writer.println("protocol: 1. Send Message ; 2. Enter ChatRoom ; 3. Leave ChatRoom; (Techn.: 4. End Connection)");
+            while (running) {
+                writer.println(
+                        "protocol: 1. Send Message ; 2. Enter ChatRoom ; 3. Leave ChatRoom; (Techn.: 4. End Connection)");
                 String input = reader.readLine();
                 switch (input) {
                     case "1":
@@ -57,9 +58,9 @@ public class ChatRoomServerProxy implements Runnable{
         try {
             this.chatRoom.sendMessage(message, getChatter());
             writer.println("0: Okay");
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            writer.println("1: " + e.getMessage());
+            writer.println("1: err " + e.getMessage());
         }
     }
 
@@ -67,19 +68,19 @@ public class ChatRoomServerProxy implements Runnable{
         try {
             chatRoom.addChatter(getChatter());
             writer.println("0: Okay");
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            writer.println("2: " + e.getMessage());
+            writer.println("2: err " + e.getMessage());
         }
     }
 
     public void leaveChatroom() {
-        try{
+        try {
             chatRoom.exitChatter(getChatter());
             writer.println("0: Okay");
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            writer.println("3: " + e.getMessage());
+            writer.println("3: err " + e.getMessage());
         }
     }
 
@@ -87,7 +88,7 @@ public class ChatRoomServerProxy implements Runnable{
         writer.println("Gib mir doch den Chatter");
         String chatterId = reader.readLine();
         IChatter ret = hashtable.get(chatterId);
-        if(ret == null) {
+        if (ret == null) {
             writer.println("Gib mir deine IP");
             String ip = reader.readLine();
             writer.println("Gib mir deinen Port");
